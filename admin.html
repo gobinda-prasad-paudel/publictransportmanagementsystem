@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Detail</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        overflow-y: hidden; /* This might cause issues */
+      }
+
+      .container {
+        width: 100%;
+        /*        margin: 0 auto; */
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        height: 100vh;
+      }
+
+      .sidebar {
+        width: 10%;
+        background-color: #2c3e50;
+        color: white;
+        padding: 20px;
+      }
+
+      .sidebar .logo {
+        font-weight: bold;
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      .sidebar nav ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .sidebar nav ul li {
+        margin-bottom: 10px;
+      }
+
+      .sidebar nav ul li a {
+        color: white;
+        text-decoration: none;
+      }
+
+      .header {
+        background-color: #6c5ce7;
+        color: #fff;
+        padding: 5px 0;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      .section {
+        margin-bottom: 20px;
+      }
+      .section h2 {
+        background-color: #e1bee7;
+        padding: 10px;
+        margin: 0;
+      }
+      .section table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+      .section table,
+      .section th,
+      .section td {
+        border: 1px solid #ddd;
+      }
+      .section th,
+      .section td {
+        padding: 8px;
+        text-align: left;
+      }
+      .section th {
+        background-color: #f2f2f2;
+      }
+      .profile {
+        display: flex;
+        align-items: center;
+      }
+      .profile img {
+        border-radius: 50%;
+        margin-right: 20px;
+      }
+
+      /* Edited Code */
+      .sidebar {
+        width: auto;
+        padding: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="logo">AFDS</div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Dashboard</a></li>
+          <li><a href="Complaints.html">Issues</a></li>
+          <li><a href="issue-new-card.html">New Card</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <div class="container">
+      <div class="header">
+        <h1>Customer Detail</h1>
+      </div>
+
+      <div class="section">
+        <h2>Complain Lists</h2>
+        <table>
+          <tr>
+            <th>User Name</th>
+            <td>Puspa Kamal</td>
+          </tr>
+          <tr>
+            <th>User ID</th>
+            <td>NPA000010</td>
+          </tr>
+          <tr>
+            <th>Complain ID</th>
+            <td>A0001</td>
+          </tr>
+          <tr>
+            <th>Complain</th>
+            <td>I dont know how to code.</td>
+          </tr>
+          <tr>
+            <th>Bus Number</th>
+            <td>BA 1 KHA 8080</td>
+          </tr>
+          <tr>
+            <th>Time and Date</th>
+            <td>2024/01/01, 10:00 AM</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>Customer Data</h2>
+        <table>
+          <tr>
+            <th>Name</th>
+            <td>Puspa Kamal</td>
+          </tr>
+          <tr>
+            <th>User Name</th>
+            <td>NPA000010</td>
+          </tr>
+          <tr>
+            <th>Phone Number</th>
+            <td>98XXXXXXXX</td>
+          </tr>
+          <tr>
+            <th>Email</th>
+            <td>email@company.com</td>
+          </tr>
+          <tr>
+            <th>Card ID</th>
+            <td>01A2065DC40D</td>
+          </tr>
+          <tr>
+            <th>No Of Card Issued</th>
+            <td>01</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>Travel History</h2>
+        <table>
+          <tr>
+            <th>S.N</th>
+            <th>Bus Number</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Time</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>BA 1 KHA 20</td>
+            <td>2024/XX/XX</td>
+            <td>2081/XX/XX</td>
+            <td>HH:MM</td>
+            <td>ABC BUSTOP</td>
+            <td>XYZ BUSTOP</td>
+            <td>HH:MM</td>
+          </tr>
+          <!-- Additional rows as needed -->
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

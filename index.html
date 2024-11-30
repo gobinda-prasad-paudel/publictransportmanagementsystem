@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AFDS Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h1>AFDS</h1>
+        <ul>
+            <li><a href="admin.html">Admin</a></li>
+            <li><a href="issue-new-card.html">New Card</a></li>
+            <li><a href="Complaints.html">Complaints</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <input type="text" placeholder="Search">
+            <div class="user-profile">
+                <!-- User profile icon can be added here -->
+            </div>
+        </div>
+        <div class="stats">
+            <div class="stat">
+                <h2>18</h2>
+                <p>Total Users</p>
+            </div>
+            <div class="stat">
+                <h2>132</h2>
+                <p>Complains</p>
+            </div>
+            <div class="stat">
+                <h2>12</h2>
+                <p>Total Vehicles</p>
+            </div>
+        </div>
+        <div class="complaints">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Complain ID</th>
+                        <th>Priority</th>
+                        <th>Bus Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>JohnDoe</td>
+                        <td>001</td>
+                        <td class="priority-medium">Medium</td>
+                        <td>1234</td>
+                    </tr>
+                    <tr>
+                        <td>JaneSmith</td>
+                        <td>002</td>
+                        <td class="priority-high">High</td>
+                        <td>5678</td>
+                    </tr>
+                    <tr>
+                        <td>MikeRoss</td>
+                        <td>003</td>
+                        <td class="priority-medium">Medium</td>
+                        <td>9101</td>
+                    </tr>
+                    <tr>
+                        <td>RachelZane</td>
+                        <td>004</td>
+                        <td class="priority-high">High</td>
+                        <td>1121</td>
+                    </tr>
+                    <tr>
+                        <td>HarveySpecter</td>
+                        <td>005</td>
+                        <td class="priority-medium">Medium</td>
+                        <td>1314</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="view-all">
+            <a href="#">View All Complaints</a>
+        </div>
+    </div>
+</body>
+</html>

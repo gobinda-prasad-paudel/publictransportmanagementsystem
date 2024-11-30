@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issues Page</title>
+    <style>
+        /* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+}
+
+.sidebar {
+    width: auto;
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+}
+
+.sidebar .logo {
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar nav ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.main-content {
+    width: 80%;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+header input[type="text"] {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+header .user-profile {
+    width: 40px;
+    height: 40px;
+    background-color: #ccc;
+    border-radius: 50%;
+}
+
+.issues-section {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.issues-section h1 {
+    background-color: #6c5ce7;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">AFDS</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Dashboard</a></li>
+                    <li><a href="issue-new-card.html">New Card</a></li>
+                    <li><a href="admin.html">Admin</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header>
+                <input type="text" placeholder="Search">
+                <div class="user-profile"></div>
+            </header>
+            <section class="issues-section">
+                <h1>Issues</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>S/N</th>
+                            <th>Bus Number</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Issue</th>
+                            <th>User Involved and Contact</th>
+                            <th>Driver Contact</th>
+                            <th>Additional Driver Contact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>BA 1 KHA 20</td>
+                            <td>2024/XX/XX</td>
+                            <td>2081/XX/XX</td>
+                            <td>HH:MM</td>
+                            <td>Fire in Bus</td>
+                            <td>None</td>
+                            <td>98XXXXXXXX</td>
+                            <td>98XXXXXXXX</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>BA 1 KHA 20</td>
+                            <td>2024/XX/XX</td>
+                            <td>2081/XX/XX</td>
+                            <td>HH:MM</td>
+                            <td>Lost Something</td>
+                            <td>Pujaa Kandel, 98XXXXXXXX</td>
+                            <td>98XXXXXXXX</td>
+                            <td>98XXXXXXXX</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
