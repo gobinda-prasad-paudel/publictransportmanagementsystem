@@ -9,7 +9,7 @@
 | NFC Reader                                  | (Implemented)         |
 | NFC Card (for payment, re-loadable)         | (Implemented)         |
 | Display (To show payment status)            | (Implemented)         |
-| Button (for sending multiple signals to admin) | (Not Implemented)     |
+| Button (for sending multiple signals to admin) | (Implemented)     |
 | ESP-32                                      | (Implemented)         |
 
 ### **Admin Unit**: This unit is used for enrolling NFC cards from the admin panel.
