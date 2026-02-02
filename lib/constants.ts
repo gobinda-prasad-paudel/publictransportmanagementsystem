@@ -595,7 +595,7 @@ export const KATHMANDU_LOCATIONS = [
 // Developer Info
 export const DEVELOPER_INFO = {
   name: "Gobinda Prasad Paudel",
-  role: "Lead Developer",
+  role: "Full Stack Developer",
   email: "gobindapaudelofficial@gmail.com",
   github: "https://github.com/gobinda-prasad-paudel/publictransportmanagementsystem",
   linkedin: "https://www.linkedin.com/in/gobinda-prasad-paudel-aa9485218/",
