@@ -594,11 +594,11 @@ export const KATHMANDU_LOCATIONS = [
 
 // Developer Info
 export const DEVELOPER_INFO = {
-  name: "Lead Developer",
+  name: "Gobinda Prasad Paudel",
   role: "Lead Developer",
-  email: "developer@voltanex.com",
-  github: "https://github.com/voltanex",
-  linkedin: "https://linkedin.com/in/voltanex",
+  email: "gobindapaudelofficial@gmail.com",
+  github: "https://github.com/gobinda-prasad-paudel/publictransportmanagementsystem",
+  linkedin: "https://www.linkedin.com/in/gobinda-prasad-paudel-aa9485218/",
   bio: "Passionate about building technology solutions for developing nations. This project was initially developed during Trinity Intra College Hackathon as MVP (Minimum Viable Product) and later completed fully under Voltanex.",
 };
 
@@ -610,7 +610,7 @@ export const PROJECT_INFO = {
   hackathon: "Trinity Intra College Hackathon",
   organization: "Voltanex",
   organizationDescription: "An e-club open to electronics, computer science, and AI enthusiasts, dedicated to collectively revolutionizing society through technology.",
-  websiteLink: "https://voltanex.com",
+  websiteLink: "https://voltanex.gobindapoudel.com.np",
 };
 
 // Counter for auto-incrementing IDs
