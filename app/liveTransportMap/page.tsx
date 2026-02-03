@@ -1,13 +1,3 @@
-// "use client";
-
-// import { Navbar } from "@/components/navbar";
-// import { Footer } from "@/components/footer";
-// import { LeafletMap } from "@/components/leaflet-map";
-// import { BUS_LOCATIONS, ROUTES } from "@/lib/constants";
-// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-// import { Badge } from "@/components/ui/badge";
-// import { Bus, MapPin, Clock, ArrowRight, Users, Shield } from "lucide-react";
-
 "use client";
 
 import dynamic from "next/dynamic";
@@ -23,7 +13,6 @@ const LeafletMap = dynamic(
   () => import("@/components/leaflet-map").then((m) => m.LeafletMap),
   { ssr: false }
 );
-
 export default function LiveTransportMapPage() {
   return (
     <div className="flex min-h-screen flex-col">

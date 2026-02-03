@@ -16,6 +16,7 @@ import {
   MessageSquareWarning,
   LogOut,
   MapPin,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -77,7 +78,12 @@ const sidebarLinks = [
   },
 ];
 
-export function AdminSidebar() {
+interface AdminSidebarProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+export function AdminSidebar({ isOpen = true, onClose }: AdminSidebarProps) {
   const pathname = usePathname();
 
   const handleLogout = () => {
@@ -87,54 +93,90 @@ export function AdminSidebar() {
     }
   };
 
+  const handleLinkClick = () => {
+    if (onClose && window.innerWidth < 1024) {
+      onClose();
+    }
+  };
+
   return (
-    <aside className="fixed left-0 top-0 z-40 h-screen w-64 border-r border-border bg-sidebar">
-      <div className="flex h-full flex-col">
-        {/* Logo */}
-        <div className="flex h-16 items-center gap-2 border-b border-sidebar-border px-6">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
-            <Bus className="h-5 w-5 text-primary-foreground" />
+    <>
+      {/* Overlay for mobile */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/50 lg:hidden"
+          onClick={onClose}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside
+        className={cn(
+          "fixed left-0 top-0 z-40 h-screen w-64 border-r border-border bg-sidebar transition-transform duration-300 ease-in-out",
+          isOpen ? "translate-x-0" : "-translate-x-full",
+          "lg:translate-x-0"
+        )}
+      >
+        <div className="flex h-full flex-col">
+          {/* Logo */}
+          <div className="flex h-16 items-center justify-between border-b border-sidebar-border px-4 lg:px-6">
+            <div className="flex items-center gap-2">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
+                <Bus className="h-5 w-5 text-primary-foreground" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-sm font-bold text-sidebar-foreground">Project Sahaj</span>
+                <span className="text-xs text-sidebar-foreground/60">Admin Panel</span>
+              </div>
+            </div>
+            {/* Close button for mobile */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="lg:hidden text-sidebar-foreground"
+              onClick={onClose}
+            >
+              <X className="h-5 w-5" />
+              <span className="sr-only">Close sidebar</span>
+            </Button>
           </div>
-          <div className="flex flex-col">
-            <span className="text-sm font-bold text-sidebar-foreground">Project Sahaj</span>
-            <span className="text-xs text-sidebar-foreground/60">Admin Panel</span>
+
+          {/* Navigation */}
+          <nav className="flex-1 space-y-1 overflow-y-auto p-4">
+            {sidebarLinks.map((link) => {
+              const isActive = pathname === link.href || pathname.startsWith(link.href + "/");
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={handleLinkClick}
+                  className={cn(
+                    "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                    isActive
+                      ? "bg-sidebar-accent text-sidebar-primary"
+                      : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground"
+                  )}
+                >
+                  <link.icon className="h-4 w-4" />
+                  {link.title}
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Logout */}
+          <div className="border-t border-sidebar-border p-4">
+            <Button
+              variant="ghost"
+              className="w-full justify-start gap-3 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground"
+              onClick={handleLogout}
+            >
+              <LogOut className="h-4 w-4" />
+              Logout
+            </Button>
           </div>
         </div>
-
-        {/* Navigation */}
-        <nav className="flex-1 space-y-1 overflow-y-auto p-4">
-          {sidebarLinks.map((link) => {
-            const isActive = pathname === link.href || pathname.startsWith(link.href + "/");
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                  isActive
-                    ? "bg-sidebar-accent text-sidebar-primary"
-                    : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground"
-                )}
-              >
-                <link.icon className="h-4 w-4" />
-                {link.title}
-              </Link>
-            );
-          })}
-        </nav>
-
-        {/* Logout */}
-        <div className="border-t border-sidebar-border p-4">
-          <Button
-            variant="ghost"
-            className="w-full justify-start gap-3 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground"
-            onClick={handleLogout}
-          >
-            <LogOut className="h-4 w-4" />
-            Logout
-          </Button>
-        </div>
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 }

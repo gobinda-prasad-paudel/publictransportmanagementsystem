@@ -53,9 +53,11 @@ const features = [
 
 const hardwareItems = [
   {
-    image: "/images/hardware-rfid-reader.jpg",
+    image: "/images/hardware-rfid-reader.jpeg",
+    secondaryImage: "/images/hardware-rfid-reader-circuit.jpeg",
     title: "RFID Card Reader",
-    description: "High-speed contactless card reader installed in every bus for quick tap-and-go payments.",
+    description:
+      "High-speed contactless card reader installed in every bus for quick tap-and-go payments.",
   },
   {
     image: "/images/hardware-gps-tracker.jpg",
@@ -160,7 +162,7 @@ export default function HomePage() {
               </p>
             </div>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {hardwareItems.map((item) => (
+              {/* {hardwareItems.map((item) => (
                 <Card key={item.title} className="bg-background border-border overflow-hidden group hover:border-primary/50 transition-colors">
                   <div className="relative aspect-square overflow-hidden bg-muted">
                     <Image
@@ -179,7 +181,64 @@ export default function HomePage() {
                     </CardDescription>
                   </CardContent>
                 </Card>
+              ))} */}
+
+              {hardwareItems.map((item, index) => (
+                <Card
+                  key={item.title}
+                  className={`bg-background border-border overflow-hidden group hover:border-primary/50 transition-colors
+      ${index === 0 ? "sm:col-span-2" : ""}
+    `}
+                >
+                  {/* IMAGE SECTION */}
+                  <div
+                    className={`relative overflow-hidden bg-muted
+        ${index === 0 ? "grid grid-cols-2 aspect-[2/1]" : "aspect-square"}
+      `}
+                  >
+                    {index === 0 ? (
+                      <>
+                        <div className="relative">
+                          <Image
+                            src={item.image || "/placeholder.svg"}
+                            alt={item.title}
+                            fill
+                            className="object-cover transition-transform duration-300 group-hover:scale-105 p-4 rounded-lg"
+                          />
+                        </div>
+                        <div className="relative">
+                          <Image
+                            src={item.secondaryImage || item.image}
+                            alt={`${item.title} secondary`}
+                            fill
+                            className="object-cover transition-transform duration-300 group-hover:scale-105 p-4 rounded-lg"
+                          />
+                        </div>
+                      </>
+                    ) : (
+                      <Image
+                        src={item.image || "/placeholder.svg"}
+                        alt={item.title}
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    )}
+                  </div>
+
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-lg text-foreground">
+                      {item.title}
+                    </CardTitle>
+                  </CardHeader>
+
+                  <CardContent>
+                    <CardDescription className="text-muted-foreground text-sm">
+                      {item.description}
+                    </CardDescription>
+                  </CardContent>
+                </Card>
               ))}
+
             </div>
           </div>
         </section>
@@ -194,7 +253,7 @@ export default function HomePage() {
               </div>
               <div className="rounded-xl border border-border bg-card p-6 sm:p-8">
                 <p className="mb-6 text-muted-foreground leading-relaxed">
-                  This project was initially developed during <span className="font-semibold text-foreground">{PROJECT_INFO.hackathon}</span> as 
+                  This project was initially developed during <span className="font-semibold text-foreground">{PROJECT_INFO.hackathon}</span> as
                   MVP (Minimum Viable Product) by Lead Developer: <span className="font-semibold text-primary">{DEVELOPER_INFO.name}</span>.
                 </p>
                 <p className="mb-6 text-muted-foreground leading-relaxed">
