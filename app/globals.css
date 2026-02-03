@@ -89,3 +89,18 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Leaflet map z-index fix to prevent overlapping with navbar */
+.leaflet-container {
+  z-index: 0 !important;
+}
+
+.leaflet-pane,
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 1 !important;
+}
+
+.leaflet-control {
+  z-index: 2 !important;
+}

@@ -5,41 +5,19 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CreditCard, Smartphone, Building, CheckCircle2, Wallet } from "lucide-react";
-import { MOCK_USERS } from "@/lib/constants";
-
-const TOPUP_AMOUNTS = [100, 200, 500, 1000, 2000, 5000];
+import { Badge } from "@/components/ui/badge";
+import { CreditCard, Smartphone, Building, CheckCircle2, Wallet, Clock, AlertCircle } from "lucide-react";
+import { MOCK_USERS, SAMPLE_TOPUP_CARDS } from "@/lib/constants";
 
 export default function UserTopupPage() {
-  const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
-  const [customAmount, setCustomAmount] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("esewa");
   const [cardCode, setCardCode] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const user = MOCK_USERS[0];
 
-  const handleTopup = async () => {
-    const amount = selectedAmount || Number(customAmount);
-    if (!amount || amount < 50) return;
-
-    setIsProcessing(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    setIsProcessing(false);
-    setIsSuccess(true);
-
-    setTimeout(() => {
-      setIsSuccess(false);
-      setSelectedAmount(null);
-      setCustomAmount("");
-    }, 3000);
-  };
-
   const handleCardTopup = async () => {
-    if (!cardCode || cardCode.length < 10) return;
+    if (!cardCode || cardCode.length < 8) return;
 
     setIsProcessing(true);
     await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -67,7 +45,7 @@ export default function UserTopupPage() {
               Your balance has been updated successfully.
             </p>
             <p className="text-lg font-semibold text-primary">
-              New Balance: Rs. {(user.balance + (selectedAmount || Number(customAmount) || 500)).toFixed(2)}
+              New Balance: Rs. {(user.balance + 500).toFixed(2)}
             </p>
           </CardContent>
         </Card>
@@ -101,157 +79,13 @@ export default function UserTopupPage() {
         </CardContent>
       </Card>
 
-      <Tabs defaultValue="online" className="space-y-6">
+      <Tabs defaultValue="card" className="space-y-6">
         <TabsList className="grid w-full grid-cols-2 bg-secondary">
-          <TabsTrigger value="online">Online Payment</TabsTrigger>
           <TabsTrigger value="card">Top Up Card</TabsTrigger>
+          <TabsTrigger value="online">Online Payment</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="online" className="space-y-6">
-          {/* Select Amount */}
-          <Card className="border-border bg-card">
-            <CardHeader>
-              <CardTitle>Select Amount</CardTitle>
-              <CardDescription>Choose a preset amount or enter a custom value</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-3 gap-3">
-                {TOPUP_AMOUNTS.map((amount) => (
-                  <Button
-                    key={amount}
-                    variant={selectedAmount === amount ? "default" : "outline"}
-                    className="h-16 text-lg"
-                    onClick={() => {
-                      setSelectedAmount(amount);
-                      setCustomAmount("");
-                    }}
-                  >
-                    Rs. {amount}
-                  </Button>
-                ))}
-              </div>
-              <div className="flex items-center gap-4 pt-4">
-                <Label htmlFor="custom" className="text-muted-foreground whitespace-nowrap">
-                  Custom Amount:
-                </Label>
-                <Input
-                  id="custom"
-                  type="number"
-                  placeholder="Enter amount (min Rs. 50)"
-                  value={customAmount}
-                  onChange={(e) => {
-                    setCustomAmount(e.target.value);
-                    setSelectedAmount(null);
-                  }}
-                  className="bg-secondary border-border"
-                />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Payment Method */}
-          <Card className="border-border bg-card">
-            <CardHeader>
-              <CardTitle>Payment Method</CardTitle>
-              <CardDescription>Choose your preferred payment option</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <RadioGroup
-                value={paymentMethod}
-                onValueChange={setPaymentMethod}
-                className="space-y-3"
-              >
-                <div className={`flex items-center space-x-3 p-4 rounded-lg border ${paymentMethod === 'esewa' ? 'border-primary bg-primary/5' : 'border-border'}`}>
-                  <RadioGroupItem value="esewa" id="esewa" />
-                  <Label htmlFor="esewa" className="flex items-center gap-3 cursor-pointer flex-1">
-                    <div className="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center">
-                      <Smartphone className="h-5 w-5 text-white" />
-                    </div>
-                    <div>
-                      <p className="font-medium">eSewa</p>
-                      <p className="text-sm text-muted-foreground">Pay with eSewa wallet</p>
-                    </div>
-                  </Label>
-                </div>
-
-                <div className={`flex items-center space-x-3 p-4 rounded-lg border ${paymentMethod === 'khalti' ? 'border-primary bg-primary/5' : 'border-border'}`}>
-                  <RadioGroupItem value="khalti" id="khalti" />
-                  <Label htmlFor="khalti" className="flex items-center gap-3 cursor-pointer flex-1">
-                    <div className="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center">
-                      <Smartphone className="h-5 w-5 text-white" />
-                    </div>
-                    <div>
-                      <p className="font-medium">Khalti</p>
-                      <p className="text-sm text-muted-foreground">Pay with Khalti wallet</p>
-                    </div>
-                  </Label>
-                </div>
-
-                <div className={`flex items-center space-x-3 p-4 rounded-lg border ${paymentMethod === 'bank' ? 'border-primary bg-primary/5' : 'border-border'}`}>
-                  <RadioGroupItem value="bank" id="bank" />
-                  <Label htmlFor="bank" className="flex items-center gap-3 cursor-pointer flex-1">
-                    <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                      <Building className="h-5 w-5 text-white" />
-                    </div>
-                    <div>
-                      <p className="font-medium">Bank Transfer</p>
-                      <p className="text-sm text-muted-foreground">Connect Bank / Mobile Banking</p>
-                    </div>
-                  </Label>
-                </div>
-
-                <div className={`flex items-center space-x-3 p-4 rounded-lg border ${paymentMethod === 'card' ? 'border-primary bg-primary/5' : 'border-border'}`}>
-                  <RadioGroupItem value="card" id="card" />
-                  <Label htmlFor="card" className="flex items-center gap-3 cursor-pointer flex-1">
-                    <div className="w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center">
-                      <CreditCard className="h-5 w-5 text-white" />
-                    </div>
-                    <div>
-                      <p className="font-medium">Debit/Credit Card</p>
-                      <p className="text-sm text-muted-foreground">Visa, Mastercard accepted</p>
-                    </div>
-                  </Label>
-                </div>
-              </RadioGroup>
-            </CardContent>
-          </Card>
-
-          {/* Summary and Pay Button */}
-          <Card className="border-border bg-card">
-            <CardContent className="p-6">
-              <div className="space-y-3 mb-6">
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Top Up Amount</span>
-                  <span className="text-foreground">Rs. {(selectedAmount || Number(customAmount) || 0).toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Service Fee</span>
-                  <span className="text-foreground">Rs. 0.00</span>
-                </div>
-                <div className="border-t border-border pt-3 flex justify-between font-semibold">
-                  <span>Total</span>
-                  <span className="text-primary">Rs. {(selectedAmount || Number(customAmount) || 0).toFixed(2)}</span>
-                </div>
-              </div>
-              <Button
-                className="w-full"
-                size="lg"
-                onClick={handleTopup}
-                disabled={(!selectedAmount && !customAmount) || isProcessing}
-              >
-                {isProcessing ? (
-                  <span className="flex items-center gap-2">
-                    <span className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-primary-foreground" />
-                    Processing...
-                  </span>
-                ) : (
-                  `Pay Rs. ${(selectedAmount || Number(customAmount) || 0).toFixed(2)}`
-                )}
-              </Button>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
+        {/* Top Up Card Tab */}
         <TabsContent value="card" className="space-y-6">
           <Card className="border-border bg-card">
             <CardHeader>
@@ -265,14 +99,14 @@ export default function UserTopupPage() {
                 <Label htmlFor="cardCode">Card Code</Label>
                 <Input
                   id="cardCode"
-                  placeholder="XXXX-XXXX-XXXX-XXXX"
+                  placeholder="XXXX-XXXX"
                   value={cardCode}
                   onChange={(e) => setCardCode(e.target.value.toUpperCase())}
                   className="bg-secondary border-border text-center text-lg tracking-wider"
-                  maxLength={19}
+                  maxLength={9}
                 />
                 <p className="text-sm text-muted-foreground">
-                  Scratch the card to reveal the 16-digit code
+                  Scratch the card to reveal the 8-digit code
                 </p>
               </div>
 
@@ -280,7 +114,7 @@ export default function UserTopupPage() {
                 className="w-full"
                 size="lg"
                 onClick={handleCardTopup}
-                disabled={cardCode.length < 10 || isProcessing}
+                disabled={cardCode.length < 8 || isProcessing}
               >
                 {isProcessing ? (
                   <span className="flex items-center gap-2">
@@ -294,9 +128,94 @@ export default function UserTopupPage() {
             </CardContent>
           </Card>
 
+          {/* Sample Top Up Cards Display */}
           <Card className="border-border bg-card">
             <CardHeader>
-              <CardTitle>Where to buy Top Up Cards</CardTitle>
+              <CardTitle>Sample Top Up Cards</CardTitle>
+              <CardDescription>
+                Available top up cards with their status
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {SAMPLE_TOPUP_CARDS.map((card) => (
+                  <div
+                    key={card.id}
+                    className={`relative p-4 rounded-xl border ${
+                      card.status === "used"
+                        ? "border-muted bg-muted/20"
+                        : "border-primary/30 bg-primary/5"
+                    }`}
+                  >
+                    {/* Mini Card Design */}
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        <div className={`p-2 rounded-lg ${
+                          card.status === "used" ? "bg-muted" : "bg-primary/20"
+                        }`}>
+                          <CreditCard className={`h-5 w-5 ${
+                            card.status === "used" ? "text-muted-foreground" : "text-primary"
+                          }`} />
+                        </div>
+                        <div>
+                          <p className={`font-mono text-sm ${
+                            card.status === "used" ? "text-muted-foreground" : "text-foreground"
+                          }`}>
+                            {card.cardNumber}
+                          </p>
+                          <p className="text-xs text-muted-foreground">Card Code</p>
+                        </div>
+                      </div>
+                      <Badge
+                        variant={card.status === "used" ? "secondary" : "default"}
+                        className={card.status === "used" ? "" : "bg-primary/20 text-primary"}
+                      >
+                        {card.status === "used" ? "Used" : "Available"}
+                      </Badge>
+                    </div>
+
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground">Amount</span>
+                        <span className={`font-semibold ${
+                          card.status === "used" ? "text-muted-foreground" : "text-primary"
+                        }`}>
+                          Rs. {card.amount}
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground">Expiry</span>
+                        <span className="text-sm text-foreground">
+                          {card.expiryDate.toLocaleDateString("en-US", {
+                            month: "short",
+                            year: "numeric",
+                          })}
+                        </span>
+                      </div>
+                      {card.status === "used" && card.usedBy && (
+                        <div className="flex justify-between items-center pt-2 border-t border-border">
+                          <span className="text-sm text-muted-foreground">Used by</span>
+                          <span className="text-sm text-muted-foreground">{card.usedBy}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {card.status === "used" && (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="rotate-[-15deg] border-2 border-destructive/50 text-destructive/50 text-xs font-bold px-3 py-1 rounded">
+                          REDEEMED
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-border bg-card">
+            <CardHeader>
+              <CardTitle>Where to Buy Top Up Cards</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="space-y-3 text-muted-foreground">
@@ -317,6 +236,82 @@ export default function UserTopupPage() {
                   Nepal Bank and partner bank branches
                 </li>
               </ul>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Online Payment Tab - Coming Soon */}
+        <TabsContent value="online" className="space-y-6">
+          <Card className="border-border bg-card">
+            <CardContent className="p-8">
+              <div className="text-center space-y-6">
+                {/* Coming Soon Badge */}
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/30">
+                  <Clock className="h-4 w-4 text-yellow-500" />
+                  <span className="text-yellow-500 font-medium">Coming Soon</span>
+                </div>
+
+                {/* Icon */}
+                <div className="w-24 h-24 mx-auto rounded-full bg-muted/50 flex items-center justify-center">
+                  <AlertCircle className="h-12 w-12 text-muted-foreground" />
+                </div>
+
+                {/* Message */}
+                <div className="space-y-2">
+                  <h2 className="text-2xl font-bold text-foreground">
+                    Online Payment Currently Unavailable
+                  </h2>
+                  <p className="text-muted-foreground max-w-md mx-auto">
+                    We are working hard to bring you online payment options including eSewa, Khalti, and bank transfers. Please use physical top up cards for now.
+                  </p>
+                </div>
+
+                {/* Payment Methods Preview */}
+                <div className="pt-6 border-t border-border">
+                  <p className="text-sm text-muted-foreground mb-4">Payment methods coming soon:</p>
+                  <div className="flex flex-wrap justify-center gap-4">
+                    <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary/50 opacity-50">
+                      <div className="w-8 h-8 bg-green-600/50 rounded-lg flex items-center justify-center">
+                        <Smartphone className="h-4 w-4 text-white" />
+                      </div>
+                      <span className="text-sm text-muted-foreground">eSewa</span>
+                    </div>
+                    <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary/50 opacity-50">
+                      <div className="w-8 h-8 bg-purple-600/50 rounded-lg flex items-center justify-center">
+                        <Smartphone className="h-4 w-4 text-white" />
+                      </div>
+                      <span className="text-sm text-muted-foreground">Khalti</span>
+                    </div>
+                    <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary/50 opacity-50">
+                      <div className="w-8 h-8 bg-blue-600/50 rounded-lg flex items-center justify-center">
+                        <Building className="h-4 w-4 text-white" />
+                      </div>
+                      <span className="text-sm text-muted-foreground">Bank Transfer</span>
+                    </div>
+                    <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary/50 opacity-50">
+                      <div className="w-8 h-8 bg-orange-600/50 rounded-lg flex items-center justify-center">
+                        <CreditCard className="h-4 w-4 text-white" />
+                      </div>
+                      <span className="text-sm text-muted-foreground">Card Payment</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Alternative Action */}
+                <div className="pt-4">
+                  <p className="text-sm text-muted-foreground mb-3">
+                    In the meantime, you can top up using physical cards:
+                  </p>
+                  <Button variant="outline" className="bg-transparent" onClick={() => {
+                    const tabsList = document.querySelector('[role="tablist"]');
+                    const cardTab = tabsList?.querySelector('[value="card"]') as HTMLButtonElement;
+                    cardTab?.click();
+                  }}>
+                    <CreditCard className="mr-2 h-4 w-4" />
+                    Use Top Up Card
+                  </Button>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>

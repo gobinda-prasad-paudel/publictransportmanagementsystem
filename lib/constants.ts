@@ -50,13 +50,13 @@ export const USERS: User[] = [
   {
     userId: "USR001",
     full_name: "Ram Bahadur Thapa",
-    email: "ram@email.com",
-    phone_number: "9841234567",
+    email: "ram.thapa@email.com",
+    phone_number: "+977-9841234567",
     document_type: "citizenship",
     document_number: "12-34-567890",
     document_issued_from: "Kathmandu, Nepal",
     document_file_url: "/documents/ram_citizenship.pdf",
-    date_of_birth: new Date("2000-05-15"),
+    date_of_birth: new Date("1990-05-15"),
     balance: 500,
     is_verified: true,
     is_active: true,
@@ -469,7 +469,7 @@ export const HARASSMENTS: Harassment[] = [
     bus_id: "BUS-101",
     route_number: "Route-1",
     customer_id: "USR001",
-    customer_contact: "9841234567",
+    customer_contact: "+977-9841234567",
     travelling_id: "TRV001",
     driver_name: "Krishna Tamang",
     driver_number: "+977-9801234567",
@@ -514,6 +514,9 @@ export interface BusLocation {
   longitude: number;
   heading: number;
   speed: number;
+  safety_rating: number; // Rating out of 9 (higher = safer)
+  current_passengers: number;
+  max_capacity: number;
   last_updated: Date;
 }
 
@@ -529,6 +532,9 @@ export const BUS_LOCATIONS: BusLocation[] = [
     longitude: 85.3206,
     heading: 270,
     speed: 25,
+    safety_rating: 8,
+    current_passengers: 18,
+    max_capacity: 40,
     last_updated: new Date(),
   },
   {
@@ -542,6 +548,9 @@ export const BUS_LOCATIONS: BusLocation[] = [
     longitude: 85.3222,
     heading: 180,
     speed: 30,
+    safety_rating: 7,
+    current_passengers: 35,
+    max_capacity: 35,
     last_updated: new Date(),
   },
   {
@@ -555,6 +564,9 @@ export const BUS_LOCATIONS: BusLocation[] = [
     longitude: 85.3620,
     heading: 225,
     speed: 20,
+    safety_rating: 9,
+    current_passengers: 42,
+    max_capacity: 38,
     last_updated: new Date(),
   },
   {
@@ -568,6 +580,25 @@ export const BUS_LOCATIONS: BusLocation[] = [
     longitude: 85.3875,
     heading: 270,
     speed: 35,
+    safety_rating: 6,
+    current_passengers: 25,
+    max_capacity: 40,
+    last_updated: new Date(),
+  },
+  {
+    bus_id: "BUS-105",
+    bus_number: "BUS-105",
+    routeId: 1,
+    driver_name: "Dipak Rai",
+    driver_phone: "+977-9841234567",
+    current_location: "Koteshwor",
+    latitude: 27.6787,
+    longitude: 85.3494,
+    heading: 90,
+    speed: 28,
+    safety_rating: 8,
+    current_passengers: 50,
+    max_capacity: 40,
     last_updated: new Date(),
   },
 ];
@@ -594,11 +625,11 @@ export const KATHMANDU_LOCATIONS = [
 
 // Developer Info
 export const DEVELOPER_INFO = {
-  name: "Gobinda Prasad Paudel",
-  role: "Full Stack Developer",
-  email: "gobindapaudelofficial@gmail.com",
-  github: "https://github.com/gobinda-prasad-paudel/publictransportmanagementsystem",
-  linkedin: "https://www.linkedin.com/in/gobinda-prasad-paudel-aa9485218/",
+  name: "Lead Developer",
+  role: "Lead Developer",
+  email: "developer@voltanex.com",
+  github: "https://github.com/voltanex",
+  linkedin: "https://linkedin.com/in/voltanex",
   bio: "Passionate about building technology solutions for developing nations. This project was initially developed during Trinity Intra College Hackathon as MVP (Minimum Viable Product) and later completed fully under Voltanex.",
 };
 
@@ -610,7 +641,7 @@ export const PROJECT_INFO = {
   hackathon: "Trinity Intra College Hackathon",
   organization: "Voltanex",
   organizationDescription: "An e-club open to electronics, computer science, and AI enthusiasts, dedicated to collectively revolutionizing society through technology.",
-  websiteLink: "https://voltanex.gobindapoudel.com.np",
+  websiteLink: "https://voltanex.com",
 };
 
 // Counter for auto-incrementing IDs
@@ -634,9 +665,163 @@ export const generateUniqueId = (): string => {
 
 // User credentials for login (hardcoded)
 export const USER_CREDENTIALS = {
-  email: "ram@email.com",
-  phone_number: "9841234567",
-  date_of_birth: "2000-05-15",
+  email: "ram.thapa@email.com",
+  phone_number: "+977-9841234567",
+  date_of_birth: "1990-05-15",
+};
+
+// User RFID Cards (for display in user dashboard)
+export interface UserRFIDCard {
+  cardId: string;
+  cardNumber: string; // 8 digit XXXX-XXXX format
+  userId: string;
+  balance: number;
+  issuedOn: Date;
+  isActive: boolean;
+}
+
+export const USER_RFID_CARDS: UserRFIDCard[] = [
+  {
+    cardId: "CARD001",
+    cardNumber: "4523-8971",
+    userId: "USR001",
+    balance: 350.00,
+    issuedOn: new Date("2024-06-01"),
+    isActive: true,
+  },
+  {
+    cardId: "CARD002",
+    cardNumber: "7892-3456",
+    userId: "USR001",
+    balance: 150.00,
+    issuedOn: new Date("2024-07-01"),
+    isActive: true,
+  },
+];
+
+// Sample Topup Cards for display
+export interface SampleTopupCard {
+  id: string;
+  cardNumber: string;
+  amount: number;
+  expiryDate: Date;
+  status: "used" | "unused";
+  usedBy?: string;
+  usedOn?: Date;
+}
+
+export const SAMPLE_TOPUP_CARDS: SampleTopupCard[] = [
+  {
+    id: "STC001",
+    cardNumber: "1234-5678",
+    amount: 100,
+    expiryDate: new Date("2026-05-01"),
+    status: "unused",
+  },
+  {
+    id: "STC002",
+    cardNumber: "2345-6789",
+    amount: 200,
+    expiryDate: new Date("2026-05-01"),
+    status: "used",
+    usedBy: "Ram Thapa",
+    usedOn: new Date("2024-08-15"),
+  },
+  {
+    id: "STC003",
+    cardNumber: "3456-7890",
+    amount: 500,
+    expiryDate: new Date("2026-06-01"),
+    status: "unused",
+  },
+  {
+    id: "STC004",
+    cardNumber: "4567-8901",
+    amount: 1000,
+    expiryDate: new Date("2026-06-01"),
+    status: "used",
+    usedBy: "Sita Sharma",
+    usedOn: new Date("2024-09-01"),
+  },
+];
+
+// Bus Schema (for admin bus management)
+export interface Bus {
+  busId: string;
+  busName: string;
+  driverName: string;
+  driverPhone: string;
+  driverDOB: Date;
+  driverLicenseNumber: string;
+  routeId: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export const BUSES: Bus[] = [
+  {
+    busId: "BUS-101",
+    busName: "Sajha Yatayat 101",
+    driverName: "Krishna Tamang",
+    driverPhone: "+977-9801234567",
+    driverDOB: new Date("1985-03-15"),
+    driverLicenseNumber: "DL-12345-KTM",
+    routeId: 1,
+    createdAt: new Date("2024-01-15"),
+    updatedAt: new Date("2024-01-15"),
+  },
+  {
+    busId: "BUS-102",
+    busName: "Sajha Yatayat 102",
+    driverName: "Binod Shrestha",
+    driverPhone: "+977-9811234567",
+    driverDOB: new Date("1990-07-20"),
+    driverLicenseNumber: "DL-23456-KTM",
+    routeId: 2,
+    createdAt: new Date("2024-01-20"),
+    updatedAt: new Date("2024-01-20"),
+  },
+  {
+    busId: "BUS-103",
+    busName: "Sajha Yatayat 103",
+    driverName: "Ramesh Gurung",
+    driverPhone: "+977-9821234567",
+    driverDOB: new Date("1988-11-10"),
+    driverLicenseNumber: "DL-34567-BKT",
+    routeId: 3,
+    createdAt: new Date("2024-02-01"),
+    updatedAt: new Date("2024-02-01"),
+  },
+  {
+    busId: "BUS-104",
+    busName: "Sajha Yatayat 104",
+    driverName: "Sanjay Maharjan",
+    driverPhone: "+977-9831234567",
+    driverDOB: new Date("1992-05-25"),
+    driverLicenseNumber: "DL-45678-LTP",
+    routeId: 4,
+    createdAt: new Date("2024-02-10"),
+    updatedAt: new Date("2024-02-10"),
+  },
+  {
+    busId: "BUS-105",
+    busName: "Sajha Yatayat 105",
+    driverName: "Dipak Rai",
+    driverPhone: "+977-9841234567",
+    driverDOB: new Date("1987-09-05"),
+    driverLicenseNumber: "DL-56789-KTM",
+    routeId: 1,
+    createdAt: new Date("2024-03-01"),
+    updatedAt: new Date("2024-03-01"),
+  },
+];
+
+// Bus ID Counter
+export let BUS_ID_COUNTER = 106;
+export const generateBusId = () => {
+  const id = `BUS-${BUS_ID_COUNTER}`;
+  BUS_ID_COUNTER++;
+  return id;
 };
 
 // Alias exports for compatibility with UI components

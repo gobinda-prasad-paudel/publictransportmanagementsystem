@@ -15,6 +15,7 @@ import {
   AlertTriangle,
   MessageSquareWarning,
   LogOut,
+  MapPin,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -23,6 +24,16 @@ const sidebarLinks = [
     title: "Dashboard",
     href: "/admin/dashboard",
     icon: LayoutDashboard,
+  },
+  {
+    title: "Live Buses",
+    href: "/admin/livebuses",
+    icon: MapPin,
+  },
+  {
+    title: "Manage Buses",
+    href: "/admin/buses",
+    icon: Bus,
   },
   {
     title: "Generate Topup Card",

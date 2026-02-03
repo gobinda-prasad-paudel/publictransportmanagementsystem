@@ -1,8 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { DataTable } from "@/components/data-table";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   USERS,
   TRANSACTIONS,
@@ -10,6 +12,7 @@ import {
   ROUTES,
   EMERGENCY_SOS,
   HARASSMENTS,
+  BUS_LOCATIONS,
 } from "@/lib/constants";
 import {
   Users,
@@ -20,6 +23,9 @@ import {
   TrendingUp,
   ArrowUpRight,
   ArrowDownRight,
+  Bus,
+  Shield,
+  MapPin,
 } from "lucide-react";
 
 const stats = [
@@ -62,6 +68,9 @@ const stats = [
 
 export default function AdminDashboardPage() {
   const recentTransactions = TRANSACTIONS.slice(-10).reverse();
+  const overCapacityBuses = BUS_LOCATIONS.filter(
+    (bus) => bus.current_passengers > bus.max_capacity
+  );
 
   const transactionColumns = [
     { header: "ID", accessorKey: "transactionId" as const },
@@ -114,13 +123,21 @@ export default function AdminDashboardPage() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-        <p className="text-muted-foreground">Welcome to Project Sahaj Admin Panel</p>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Dashboard</h1>
+          <p className="text-muted-foreground">Welcome to Project Sahaj Admin Panel</p>
+        </div>
+        <Button asChild>
+          <Link href="/admin/livebuses">
+            <MapPin className="mr-2 h-4 w-4" />
+            Live Buses Map
+          </Link>
+        </Button>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         {stats.map((stat) => (
           <Card key={stat.title} className="bg-card border-border">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -153,6 +170,96 @@ export default function AdminDashboardPage() {
           </Card>
         ))}
       </div>
+
+      {/* Live Buses Overview */}
+      <Card className="bg-card border-border">
+        <CardHeader>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <CardTitle className="text-foreground">Live Buses Overview</CardTitle>
+              <CardDescription className="text-muted-foreground">
+                Current status of all active buses
+              </CardDescription>
+            </div>
+            {overCapacityBuses.length > 0 && (
+              <Badge variant="destructive" className="w-fit">
+                <AlertTriangle className="mr-1 h-3 w-3" />
+                {overCapacityBuses.length} Over Capacity
+              </Badge>
+            )}
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+              {BUS_LOCATIONS.map((bus) => {
+                const isOverCapacity = bus.current_passengers > bus.max_capacity;
+                return (
+                  <div
+                    key={bus.bus_id}
+                    className={`p-4 rounded-lg border ${
+                      isOverCapacity
+                        ? "border-destructive bg-destructive/10"
+                        : "border-border bg-secondary/50"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        <div className={`p-2 rounded-full ${isOverCapacity ? 'bg-destructive/20' : 'bg-primary/20'}`}>
+                          <Bus className={`h-4 w-4 ${isOverCapacity ? 'text-destructive' : 'text-primary'}`} />
+                        </div>
+                        <span className="font-semibold text-foreground">{bus.bus_number}</span>
+                      </div>
+                      <Badge variant="secondary" className="text-xs bg-primary/20 text-primary">
+                        {bus.speed} km/h
+                      </Badge>
+                    </div>
+                    
+                    <div className="space-y-2 text-sm">
+                      <div className="flex items-center justify-between">
+                        <span className="text-muted-foreground">Passengers:</span>
+                        <span className={`font-medium ${isOverCapacity ? 'text-destructive' : 'text-foreground'}`}>
+                          {bus.current_passengers}/{bus.max_capacity}
+                        </span>
+                      </div>
+                      
+                      <div className="flex items-center justify-between">
+                        <span className="text-muted-foreground">Safety:</span>
+                        <div className="flex items-center gap-1">
+                          <div className="flex gap-0.5">
+                            {Array.from({ length: 9 }).map((_, i) => (
+                              <div
+                                key={i}
+                                className={`h-1.5 w-1.5 rounded-full ${
+                                  i < bus.safety_rating ? 'bg-primary' : 'bg-muted'
+                                }`}
+                              />
+                            ))}
+                          </div>
+                          <span className="text-foreground font-medium">{bus.safety_rating}/9</span>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-1 text-muted-foreground pt-1 border-t border-border">
+                        <MapPin className="h-3 w-3" />
+                        <span className="truncate">{bus.current_location}</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className="mt-4 flex justify-end">
+            <Button variant="outline" size="sm" asChild className="bg-transparent">
+              <Link href="/admin/livebuses">
+                View Full Map
+                <ArrowUpRight className="ml-1 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Recent Transactions */}
       <Card className="bg-card border-border">
