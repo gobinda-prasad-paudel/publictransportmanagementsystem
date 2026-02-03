@@ -50,13 +50,13 @@ export const USERS: User[] = [
   {
     userId: "USR001",
     full_name: "Ram Bahadur Thapa",
-    email: "ram.thapa@email.com",
-    phone_number: "+977-9841234567",
+    email: "user@email.com",
+    phone_number: "9841234567",
     document_type: "citizenship",
     document_number: "12-34-567890",
     document_issued_from: "Kathmandu, Nepal",
     document_file_url: "/documents/ram_citizenship.pdf",
-    date_of_birth: new Date("1990-05-15"),
+    date_of_birth: new Date("2000-05-15"),
     balance: 500,
     is_verified: true,
     is_active: true,
@@ -625,11 +625,11 @@ export const KATHMANDU_LOCATIONS = [
 
 // Developer Info
 export const DEVELOPER_INFO = {
-  name: "Lead Developer",
-  role: "Lead Developer",
+  name: "Gobinda Prasad Paudel",
+  role: "Full Stack Developer",
   email: "developer@voltanex.com",
-  github: "https://github.com/voltanex",
-  linkedin: "https://linkedin.com/in/voltanex",
+  github: "https://github.com/gobinda-prasad-paudel",
+  linkedin: "https://www.linkedin.com/in/gobinda-prasad-paudel-aa9485218/",
   bio: "Passionate about building technology solutions for developing nations. This project was initially developed during Trinity Intra College Hackathon as MVP (Minimum Viable Product) and later completed fully under Voltanex.",
 };
 
@@ -641,7 +641,7 @@ export const PROJECT_INFO = {
   hackathon: "Trinity Intra College Hackathon",
   organization: "Voltanex",
   organizationDescription: "An e-club open to electronics, computer science, and AI enthusiasts, dedicated to collectively revolutionizing society through technology.",
-  websiteLink: "https://voltanex.com",
+  websiteLink: "https://voltanex.gobindapoudel.com.np",
 };
 
 // Counter for auto-incrementing IDs
@@ -665,9 +665,9 @@ export const generateUniqueId = (): string => {
 
 // User credentials for login (hardcoded)
 export const USER_CREDENTIALS = {
-  email: "ram.thapa@email.com",
-  phone_number: "+977-9841234567",
-  date_of_birth: "1990-05-15",
+  email: "user@email.com",
+  phone_number: "9841234567",
+  date_of_birth: "2000-05-15",
 };
 
 // User RFID Cards (for display in user dashboard)
